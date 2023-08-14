@@ -33,7 +33,7 @@ end
 # hold all the git commit log messages, but group them based on their ticket number or "type"
 class GitCommit
   def initialize
-    @git_entries = Hash.new
+    @git_entries = {}
   end
 
   def add_git_commit_line(line)
@@ -158,9 +158,9 @@ class JiraTickets
   attr_reader :unresolved, :missing_release_notes
 
   def initialize
-    @tickets = Hash.new
-    @unresolved = Array.new
-    @missing_release_notes = Array.new
+    @tickets = {}
+    @unresolved = []
+    @missing_release_notes = []
   end
 
   def [](ticket)
