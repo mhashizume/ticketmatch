@@ -249,7 +249,7 @@ unless in_repo.chomp == "true"
   exit 1
 end
 
-if git_from_rev == nil
+if git_from_rev.nil?
   if interactive
     git_from_rev = ask('Enter Git From Rev: ')
   else
@@ -257,7 +257,7 @@ if git_from_rev == nil
   end
 end
 
-if git_to_rev == nil
+if git_to_rev.nil?
   if interactive
     git_to_rev = ask('Enter Git To Rev: ') {|q| q.default = 'master'}
   else
@@ -284,7 +284,7 @@ git_commits.associate_reverts
 
 # collect the Jira information
 #
-if jira_project_name == nil
+if jira_project_name.nil?
   if interactive
     jira_project_name = ask('Enter JIRA project: ') {|q| q.default = 'PUP'}
   else
@@ -292,7 +292,7 @@ if jira_project_name == nil
   end
 end
 
-if jira_project_fixed_version == nil
+if jira_project_fixed_version.nil?
   if interactive
     jira_project_fixed_version = ask('Enter JIRA fix version: ') do |q|
       q.default = "#{jira_project_name} #{git_to_rev}"
@@ -302,7 +302,7 @@ if jira_project_fixed_version == nil
   end
 end
 
-if jira_team_name == nil
+if jira_team_name.nil?
   if interactive
     jira_team_name = ask('(Optional) Enter JIRA team name: ')
   end
