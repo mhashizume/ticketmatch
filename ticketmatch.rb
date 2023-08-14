@@ -243,7 +243,7 @@ end
 parser.parse!
 # check if we are in a git tree or not
 #
-in_repo = %x{git rev-parse --is-inside-work-tree 2>/dev/null}
+in_repo = `git rev-parse --is-inside-work-tree 2>/dev/null`
 unless in_repo.chomp == "true"
   say('ERROR: Please run ticketmatch from a git repo directory')
   exit 1
@@ -269,7 +269,7 @@ end
 # process and store in a hash per user entered ticket reference
 #
 git_commits = GitCommit.new
-git_log     = %x{git log --no-merges --oneline #{git_from_rev}..#{git_to_rev}}
+git_log     = `git log --no-merges --oneline #{git_from_rev}..#{git_to_rev}`
 git_log.each_line do |line|
   git_commits.add_git_commit_line(line)
 end
@@ -324,7 +324,7 @@ jira_post_data = JSON.fast_generate(jira_data)
 jira_auth_header = "-H 'Authorization: Basic #{jira_auth_token}'"
 
 begin
-  jira_issues = JSON.parse(%x{curl -s -S -X POST -H 'Content-Type: application/json' #{jira_auth_header} --data '#{jira_post_data}' https://perforce.atlassian.net/rest/api/2/search})
+  jira_issues = JSON.parse(`curl -s -S -X POST -H 'Content-Type: application/json' #{jira_auth_header} --data '#{jira_post_data}' https://perforce.atlassian.net/rest/api/2/search`)
 rescue
   say('Unable to obtain list of issues from JIRA')
   exit(status=1)
