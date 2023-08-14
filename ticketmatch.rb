@@ -316,7 +316,7 @@ query = "project = #{jira_project_name}"
 jira_data = {
     :jql        =>  query + " AND fixVersion = \"#{jira_project_fixed_version}\" ORDER BY key",
     :maxResults => -1,
-    :fields     => ['status', 'issuetype', 'customfield_10067', 'customfield_10064']
+    :fields     => %w[status issuetype customfield_10067 customfield_10064']
 }
 # Process file with Jira issues
 jira_post_data = JSON.fast_generate(jira_data)
@@ -399,7 +399,7 @@ puts
 puts '----- Git commits in Jira -----'
 known_jira_tickets = jira_tickets.keys
 unknown_issues     = git_commits.keys.reject do |ticket|
-  known_jira_tickets.include?(ticket) || ["MAINT", "DOC", "DOCS", "TRIVIAL", "PACKAGING", "UNMARKED"].include?(ticket)
+  known_jira_tickets.include?(ticket) || %w[MAINT DOC DOCS TRIVIAL PACKAGING UNMARKED].include?(ticket)
 end
 if !unknown_issues.empty?
   say("<%= color('COMMIT TOKENS NOT FOUND IN JIRA (OR NOT WITH FIX VERSION OF #{jira_project_fixed_version})', RED) %>")
