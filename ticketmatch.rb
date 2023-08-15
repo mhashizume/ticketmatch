@@ -207,31 +207,31 @@ parser = OptionParser.new do |opts|
   opts.banner = 'Usage: ruby ticketmatch.rb [options]'
 
   opts.on('-f', '--from from_rev', 'from git revision') do |from_rev|
-    git_from_rev = from_rev;
+    git_from_rev = from_rev
   end
 
   opts.on('-t', '--to to_rev', 'to git revision') do |to_rev|
-    git_to_rev = to_rev;
+    git_to_rev = to_rev
   end
 
   opts.on('-p', '--project JIRA_project', 'JIRA project ID') do |project_name|
-    jira_project_name = project_name;
+    jira_project_name = project_name
   end
 
   opts.on('-v', '--version version_fixed_in', 'JIRA "fixed-in" version (in quotes for now, please)') do |fixed_version|
-    jira_project_fixed_version = fixed_version;
+    jira_project_fixed_version = fixed_version
   end
 
   opts.on('-m', '--team JIRA_team', 'JIRA team assigned tickets within JIRA project') do |team_name|
-    jira_team_name = team_name;
+    jira_team_name = team_name
   end
 
   opts.on('-c', '--ci', 'continuous integration mode (no prompting)') do
-    interactive = false;
+    interactive = false
   end
 
   opts.on('-a', '--jira-auth-token token', 'personal access token for JIRA authentication') do |auth_token|
-    jira_auth_token = auth_token;
+    jira_auth_token = auth_token
   end
 
   opts.on('-h', '--help', 'this message') do
