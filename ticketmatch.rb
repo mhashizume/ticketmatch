@@ -125,7 +125,7 @@ class GitCommit
   end
 
   def inspect
-    string = ""
+    string = ''
     @git_entries.each_key do |key|
       string += "{#{key}: #{@git_entries[key].inspect} }\n"
     end
@@ -187,7 +187,7 @@ class JiraTickets
   end
 
   def inspect
-    string = ""
+    string = ''
     @tickets.each_key do |key|
       string += "{#{key}: #{@tickets[key].inspect} }\n"
     end
@@ -244,7 +244,7 @@ parser.parse!
 # check if we are in a git tree or not
 #
 in_repo = `git rev-parse --is-inside-work-tree 2>/dev/null`
-unless in_repo.chomp == "true"
+unless in_repo.chomp == 'true'
   say('ERROR: Please run ticketmatch from a git repo directory')
   exit 1
 end
@@ -308,7 +308,7 @@ if jira_team_name.nil?
   end
 end
 
-jira_team_name = nil if jira_team_name == ""
+jira_team_name = nil if jira_team_name == ''
 
 query = "project = #{jira_project_name}"
 
