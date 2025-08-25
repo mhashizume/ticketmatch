@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # vi: set noexpandtab:
 set -e
+set -x
 unset CDPATH
 
 # See README.md for arguments and available environment variables.
@@ -290,15 +291,24 @@ baseDir=${WORKSPACE:-${PWD}}
 [[ -d ${baseDir} ]] || { echo "Error: '${baseDir}' -- no such directory."; exit 1; }
 cd ${baseDir}
 
-# get desired revision of puppet-agent in place
-cloneOrFetch "${puppetAgentBaseRev}" "${PUPPET_AGENT_URL}"
-
 agent_repo=$(parseRepoName ${PUPPET_AGENT_URL})
-pushd ${agent_repo}
-    agentVersion=$(getAgentVersion)
-    oldRuntimeVersion=$(getOldRuntimeRev)
-    newRuntimeVersion=$(readRuntimeVersion)
-popd
+
+# If we're running in the puppet-agent repo, don't clone it down
+if [[ ! $(pwd) =~ ${agent_repo}$ ]]; then
+	# get desired revision of puppet-agent in place
+	cloneOrFetch "${puppetAgentBaseRev}" "${PUPPET_AGENT_URL}"
+
+	pushd ${agent_repo}
+			agentVersion=$(getAgentVersion)
+			oldRuntimeVersion=$(getOldRuntimeRev)
+			newRuntimeVersion=$(readRuntimeVersion)
+	popd
+else
+	PUPPET_AGENT_DIR=$(pwd)
+	agentVersion=$(getAgentVersion)
+	oldRuntimeVersion=$(getOldRuntimeRev)
+	newRuntimeVersion=$(readRuntimeVersion)
+fi
 
 repoRevMap=$(getComponentRevMap)
 
